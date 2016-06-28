@@ -1,0 +1,137 @@
+﻿@model MarcusChangKappageAPI.Models.KabbageFormModel
+
+@{
+    ViewBag.Title = "Home Page";
+    var prod = (MarcusChangKappageAPI.Models.PreQualificationResponseFinal)ViewData["ResponseResults"];
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Marcus Chang Kabbage Loan Qualifier </h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.firstName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.firstName, new { @class = "form-control", @placeholder = "First Name", @type = "text" })
+                @Html.ValidationMessageFor(model => model.firstName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.lastName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.lastName, new { @class = "form-control", @placeholder = "Last Name", @type = "text" })
+                @Html.ValidationMessageFor(model => model.lastName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmailAddress, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control", @placeholder = "Email Address", @type = "text" })
+                @Html.ValidationMessageFor(model => model.EmailAddress)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.businessName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.businessName, new { @class = "form-control", @placeholder = "Business Name", @type = "text" })
+                @Html.ValidationMessageFor(model => model.businessName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.phoneNumber, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.phoneNumber, new { @class = "form-control", @placeholder = "Phone Number", @type = "text" })
+                @Html.ValidationMessageFor(model => model.phoneNumber)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.yearStarted, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.yearStarted, new { @class = "form-control", @placeholder = "Year Started", @type = "text" })
+                @Html.ValidationMessageFor(model => model.yearStarted)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.estimatedFICO, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.estimatedFICO, new { @class = "form-control", @placeholder = "Estimated FICO Score", @type = "text" })
+                @Html.ValidationMessageFor(model => model.estimatedFICO)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.estimatedAnnualRevenue, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.estimatedAnnualRevenue, new { @class = "form-control", @placeholder = "Estimated Annual Revenue", @type = "text" })
+                @Html.ValidationMessageFor(model => model.estimatedAnnualRevenue)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.grossPercentageFromCards, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.grossPercentageFromCards, new { @class = "form-control", @placeholder = "Gross Percentage From Cards", @type = "text" })
+                @Html.ValidationMessageFor(model => model.grossPercentageFromCards)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.typeOfBusiness, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.typeOfBusiness, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.typeOfBusiness)
+
+            </div>
+        </div>
+        <div id="HiddenFields" hidden="hidden">
+            <input id="txtQualify" name="txtQualify" value=@prod.Qualified hidden="hidden" />
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit " class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+      <!-- Trigger the modal with a button -->
+    @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" hidden="hidden" ></button>*@
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Pre-Qualification Complete</h4>
+                    <h4 class="modal-title"> <span id="Status"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <p>See information below and how much you qualify for</p>
+                    <h1>Pre-Qualification Information</h1>
+                    <p>Qualification Status based on what you submitted: <b>@prod.Qualified.ToString("C")</b></p>
+                    <p>You qualify for the Amount of: <b>@prod.QualifyAmount</b> </p>
+                    <p><a href="@prod.RedirectUrl">Click here to continue your approval process</a></p>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-2.1.3.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/KabbageJQ.js"></script>
+
+
+
