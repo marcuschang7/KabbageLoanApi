@@ -4,13 +4,12 @@
     ViewBag.Title = "Home Page";
     var prod = (MarcusChangKappageAPI.Models.PreQualificationResponseFinal)ViewData["ResponseResults"];
 }
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Marcus Chang Kabbage Loan Qualifier </h4>
+        <h4>Marcus Chang Kabbage Loan Qualifier</h4>
         <hr />
         @Html.ValidationSummary(true)
 
@@ -93,7 +92,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Submit " class="btn btn-default" />
+                <input type="submit" value="Submit" class=" btn btn-default" />
             </div>
         </div>
     </div>
@@ -108,19 +107,23 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Pre-Qualification Complete</h4>
-                    <h4 class="modal-title"> <span id="Status"></span></h4>
                 </div>
                 <div class="modal-body">
                     <p>See information below and how much you qualify for</p>
                     <h1>Pre-Qualification Information</h1>
-                    <p>Qualification Status based on what you submitted: <b>@prod.Qualified.ToString("C")</b></p>
+                    <p>Qualification Status based on what you submitted: <b>@prod.Qualified</b></p>
                     <p>You qualify for the Amount of: <b>@prod.QualifyAmount</b> </p>
-                    <p><a href="@prod.RedirectUrl">Click here to continue your approval process</a></p>
+                    <div id="divBTNapplynow">
+                        <button id="btnApply" name="btnApply" class="btn btn-primary btn"
+                                onclick="window.location.href = '@prod.RedirectUrl'; return false;">
+                            Apply Now!
+                        </button>
+                    </div>
 
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
 
